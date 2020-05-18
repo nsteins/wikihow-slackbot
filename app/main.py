@@ -30,3 +30,17 @@ def home_view():
                 "text": f'![Image]({image})'
             }
         })
+
+@app.route("/random") 
+def random():
+    article_id = random_article()
+
+    image_list = get_images(article_id)
+    image = random.choice(image_list) 
+    return jsonify({
+            "response_type": "in_channel",
+            "text": {
+                "type": "markdown",
+                "text": f'![Image]({image})'
+            }
+        })
