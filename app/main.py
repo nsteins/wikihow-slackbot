@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from whapi import search
 from whapi import get_images
+from whapi import random_article
+
 import random
 
   
@@ -13,8 +15,11 @@ def index():
 @app.route("/search") 
 def home_view():
     query = request.args.get('text')
-    search_results = search(query, 1)
-    article_id = search_results[0]['article_id']
+    if query:
+        search_results = search(query, 1)
+        article_id = search_results[0]['article_id']
+    if not article_id:
+        article_id = random_article()
 
     image_list = get_images(article_id)
     image = random.choice(image_list) 
